@@ -1,7 +1,7 @@
 import java.util.*;
 
 // ===================== MAIN DRIVER =====================
-public class LLD_Creational_Assignment {
+public class LLD_Creational {
 
     public static void main(String[] args) {
 
@@ -58,15 +58,15 @@ public class LLD_Creational_Assignment {
 class Logger {
 
     // TODO 1: Make this variable private static
-    static Logger instance;
+    private static Logger instance;
 
     // TODO 2: Add a variable to track log count
-    int logCount = 0;
+    private int logCount = 0;
 
     // TODO 3: Make constructor private
-    public Logger() {}
+    private Logger() {}
 
-    public static Logger getInstance() {
+    public static synchronized Logger getInstance() {
         // TODO 4: Ensure only ONE instance is created
         // TODO 5: Make it thread-safe using synchronized keyword (basic way)
         if (instance == null) {
@@ -78,18 +78,20 @@ class Logger {
     public void logInfo(String msg) {
         // TODO 6: Increment log count
         // TODO 7: Print in format -> INFO: message
-        System.out.println(msg);
+        logCount++;
+        System.out.println("INFO: "+msg);
     }
 
     public void logError(String msg) {
         // TODO 8: Increment log count
         // TODO 9: Print in format -> ERROR: message
-        System.out.println(msg);
+        logCount++;
+        System.out.println("ERROR: " +msg);
     }
 
     public int getLogCount() {
         // TODO 10: return total logs
-        return 0;
+        return logCount;
     }
 }
 
@@ -105,6 +107,7 @@ interface Notification {
 class EmailNotification implements Notification {
     public void send(String message) {
         // TODO: print "Sending EMAIL: message"
+        System.out.println("Sending EMAIL: " + message);
     }
 }
 
@@ -112,6 +115,7 @@ class EmailNotification implements Notification {
 class SMSNotification implements Notification {
     public void send(String message) {
         // TODO
+        System.out.println("Sending SMS: " + message);
     }
 }
 
@@ -119,6 +123,7 @@ class SMSNotification implements Notification {
 class WhatsAppNotification implements Notification {
     public void send(String message) {
         // TODO
+        System.out.println("Sending WHATSAPP: " + message);
     }
 }
 
@@ -132,8 +137,17 @@ class NotificationFactory {
         // if type = WHATSAPP -> return WhatsAppNotification
 
         // TODO 15: handle invalid input (return null or print message)
-
-        return null;
+        if(type == null){ return null;}
+        if(type.equalsIgnoreCase("EMAIL")){
+            return new EmailNotification();
+        } else if(type.equalsIgnoreCase("SMS")){
+            return new SMSNotification();
+        } else if(type.equalsIgnoreCase("WHATSAPP")){
+            return new WhatsAppNotification();
+        } else {
+            System.out.println("Invalid notification type: " +type);
+            return null;
+        }
     }
 }
 
@@ -160,6 +174,7 @@ interface UIFactory {
 class LightButton implements Button {
     public void render() {
         // TODO: print "Light Button"
+        System.out.println("Light Button");
     }
 }
 
@@ -167,6 +182,7 @@ class LightButton implements Button {
 class LightTextBox implements TextBox {
     public void render() {
         // TODO
+        System.out.println("Light TextBox");
     }
 }
 
@@ -174,12 +190,12 @@ class LightTextBox implements TextBox {
 class LightFactory implements UIFactory {
     public Button createButton() {
         // TODO
-        return null;
+        return new LightButton();
     }
 
     public TextBox createTextBox() {
         // TODO
-        return null;
+        return new LightTextBox();
     }
 }
 
@@ -189,6 +205,7 @@ class LightFactory implements UIFactory {
 class DarkButton implements Button {
     public void render() {
         // TODO
+        System.out.println("Dark Button");
     }
 }
 
@@ -196,6 +213,7 @@ class DarkButton implements Button {
 class DarkTextBox implements TextBox {
     public void render() {
         // TODO
+        System.out.println("Dark TextBox");
     }
 }
 
@@ -203,12 +221,12 @@ class DarkTextBox implements TextBox {
 class DarkFactory implements UIFactory {
     public Button createButton() {
         // TODO
-        return null;
+        return new DarkButton();
     }
 
     public TextBox createTextBox() {
         // TODO
-        return null;
+        return new DarkTextBox();
     }
 }
 
@@ -219,6 +237,14 @@ class UIFactoryProvider {
         // TODO 22:
         // if LIGHT -> LightFactory
         // if DARK -> DarkFactory
+        if(theme == null){ return null;}
+        if(theme.equalsIgnoreCase("LIGHT")){
+            return new LightFactory();
+        } else if(theme.equalsIgnoreCase("DARK")){
+            return new DarkFactory();
+        } else {
+            System.out.println("Invalid theme: " + theme);
+        }
 
         return null;
     }
@@ -244,8 +270,8 @@ class Pizza {
 
         // TODO 23: Add fields
         private String size;
-        private boolean cheese;
-        private boolean mushrooms;
+        private boolean cheese = false;
+        private boolean mushrooms = false;
 
         // TODO 24: Constructor with mandatory field size
         public Builder(String size) {
@@ -254,11 +280,15 @@ class Pizza {
 
         // TODO 25: addCheese()
         public Builder addCheese() {
+
+            this.cheese = true;
             return this;
         }
 
         // TODO 26: addMushrooms()
         public Builder addMushrooms() {
+
+            this.mushrooms = true;
             return this;
         }
 
@@ -266,6 +296,9 @@ class Pizza {
 
             // TODO 27:
             // validate size is not null or empty
+            if(size == null || size.isEmpty()){
+                throw new IllegalArgumentException("Size cannot be null or empty");
+            }
 
             return new Pizza(this);
         }
@@ -273,7 +306,7 @@ class Pizza {
 
     public String toString() {
         // TODO 28: print all fields properly
-        return "";
+        return "Pizza [size=" + size + ", cheese=" + cheese + ", mushrooms=" + mushrooms + "]";
     }
 }
 
@@ -291,6 +324,9 @@ class Document implements Cloneable {
 
         // TODO 29: assign values
         // IMPORTANT: create new ArrayList for tags
+        this.title = title;
+        this.content = content;
+        this.tags = new ArrayList<>(tags);
     }
 
     public Document clone() {
@@ -299,6 +335,6 @@ class Document implements Cloneable {
         // create new object
         // deep copy tags list
 
-        return null;
+        return new Document((this.title), (this.content), new ArrayList<>(this.tags));
     }
 }
