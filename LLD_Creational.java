@@ -107,6 +107,7 @@ interface Notification {
 class EmailNotification implements Notification {
     public void send(String message) {
         // TODO: print "Sending EMAIL: message"
+        System.out.println("Sending EMAIL: " + message);
     }
 }
 
@@ -114,6 +115,7 @@ class EmailNotification implements Notification {
 class SMSNotification implements Notification {
     public void send(String message) {
         // TODO
+        System.out.println("Sending SMS: " + message);
     }
 }
 
@@ -121,6 +123,7 @@ class SMSNotification implements Notification {
 class WhatsAppNotification implements Notification {
     public void send(String message) {
         // TODO
+        System.out.println("Sending WHATSAPP: " + message);
     }
 }
 
@@ -134,8 +137,17 @@ class NotificationFactory {
         // if type = WHATSAPP -> return WhatsAppNotification
 
         // TODO 15: handle invalid input (return null or print message)
-
-        return null;
+        if(type == null){ return null;}
+        if(type.equalsIgnoreCase("EMAIL")){
+            return new EmailNotification();
+        } else if(type.equalsIgnoreCase("SMS")){
+            return new SMSNotification();
+        } else if(type.equalsIgnoreCase("WHATSAPP")){
+            return new WhatsAppNotification();
+        } else {
+            System.out.println("Invalid notification type: " +type);
+            return null;
+        }
     }
 }
 
