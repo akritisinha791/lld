@@ -174,6 +174,7 @@ interface UIFactory {
 class LightButton implements Button {
     public void render() {
         // TODO: print "Light Button"
+        System.out.println("Light Button");
     }
 }
 
@@ -181,6 +182,7 @@ class LightButton implements Button {
 class LightTextBox implements TextBox {
     public void render() {
         // TODO
+        System.out.println("Light TextBox");
     }
 }
 
@@ -188,12 +190,12 @@ class LightTextBox implements TextBox {
 class LightFactory implements UIFactory {
     public Button createButton() {
         // TODO
-        return null;
+        return new LightButton;
     }
 
     public TextBox createTextBox() {
         // TODO
-        return null;
+        return new LightTextBox;
     }
 }
 
@@ -203,6 +205,7 @@ class LightFactory implements UIFactory {
 class DarkButton implements Button {
     public void render() {
         // TODO
+        System.out.println("Dark Button");
     }
 }
 
@@ -210,6 +213,7 @@ class DarkButton implements Button {
 class DarkTextBox implements TextBox {
     public void render() {
         // TODO
+        System.out.println("Dark TextBox");
     }
 }
 
@@ -217,12 +221,12 @@ class DarkTextBox implements TextBox {
 class DarkFactory implements UIFactory {
     public Button createButton() {
         // TODO
-        return null;
+        return new DarkButton();
     }
 
     public TextBox createTextBox() {
         // TODO
-        return null;
+        return new DarkTextBox();
     }
 }
 
@@ -233,6 +237,14 @@ class UIFactoryProvider {
         // TODO 22:
         // if LIGHT -> LightFactory
         // if DARK -> DarkFactory
+        if(theme == null){ return null;}
+        if(theme.equalsIgnoreCase("LIGHT")){
+            return new LightFactory();
+        } else if(theme.equalsIgnoreCase("DARK")){
+            return new DarkFactory();
+        } else {
+            System.out.println("Invalid theme: " + theme);
+        }
 
         return null;
     }
