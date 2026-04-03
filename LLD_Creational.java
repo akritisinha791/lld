@@ -324,6 +324,9 @@ class Document implements Cloneable {
 
         // TODO 29: assign values
         // IMPORTANT: create new ArrayList for tags
+        this.title = title;
+        this.content = content;
+        this.tags = new ArrayList<>(tags);
     }
 
     public Document clone() {
@@ -332,6 +335,6 @@ class Document implements Cloneable {
         // create new object
         // deep copy tags list
 
-        return null;
+        return new Document((this.title), (this.content), new ArrayList<>(this.tags));
     }
 }
