@@ -58,15 +58,15 @@ public class LLD_Creational_Assignment {
 class Logger {
 
     // TODO 1: Make this variable private static
-    static Logger instance;
+    private static Logger instance;
 
     // TODO 2: Add a variable to track log count
-    int logCount = 0;
+    private int logCount = 0;
 
     // TODO 3: Make constructor private
-    public Logger() {}
+    private Logger() {}
 
-    public static Logger getInstance() {
+    public static synchronized Logger getInstance() {
         // TODO 4: Ensure only ONE instance is created
         // TODO 5: Make it thread-safe using synchronized keyword (basic way)
         if (instance == null) {
@@ -78,18 +78,20 @@ class Logger {
     public void logInfo(String msg) {
         // TODO 6: Increment log count
         // TODO 7: Print in format -> INFO: message
-        System.out.println(msg);
+        logCount++;
+        System.out.println("INFO: "+msg);
     }
 
     public void logError(String msg) {
         // TODO 8: Increment log count
         // TODO 9: Print in format -> ERROR: message
-        System.out.println(msg);
+        logCount++;
+        System.out.println("ERROR: " +msg);
     }
 
     public int getLogCount() {
         // TODO 10: return total logs
-        return 0;
+        return logCount;
     }
 }
 
