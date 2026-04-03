@@ -270,8 +270,8 @@ class Pizza {
 
         // TODO 23: Add fields
         private String size;
-        private boolean cheese;
-        private boolean mushrooms;
+        private boolean cheese = false;
+        private boolean mushrooms = false;
 
         // TODO 24: Constructor with mandatory field size
         public Builder(String size) {
@@ -280,11 +280,15 @@ class Pizza {
 
         // TODO 25: addCheese()
         public Builder addCheese() {
+
+            this.cheese = true;
             return this;
         }
 
         // TODO 26: addMushrooms()
         public Builder addMushrooms() {
+
+            this.mushrooms = true;
             return this;
         }
 
@@ -292,6 +296,9 @@ class Pizza {
 
             // TODO 27:
             // validate size is not null or empty
+            if(size == null || size.isEmpty()){
+                throw new IllegalArgumentException("Size cannot be null or empty");
+            }
 
             return new Pizza(this);
         }
@@ -299,7 +306,7 @@ class Pizza {
 
     public String toString() {
         // TODO 28: print all fields properly
-        return "";
+        return "Pizza [size=" + size + ", cheese=" + cheese + ", mushrooms=" + mushrooms + "]";
     }
 }
 
