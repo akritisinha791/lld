@@ -1,7 +1,7 @@
 import java.util.*;
 
 // ===================== MAIN DRIVER =====================
-public class LLD_Creational_Assignment {
+public class LLD_Creational {
 
     public static void main(String[] args) {
 
@@ -190,12 +190,12 @@ class LightTextBox implements TextBox {
 class LightFactory implements UIFactory {
     public Button createButton() {
         // TODO
-        return new LightButton;
+        return new LightButton();
     }
 
     public TextBox createTextBox() {
         // TODO
-        return new LightTextBox;
+        return new LightTextBox();
     }
 }
 
